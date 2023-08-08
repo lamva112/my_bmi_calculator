@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_bmi_calculator/constants/app_colors.dart';
+import 'package:my_bmi_calculator/routes/routes.dart';
 import 'package:my_bmi_calculator/screen/input_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 1), () {
-      Navigator.push(context,MaterialPageRoute(builder: (_)=> const InputScreen()));
+      Navigator.pushReplacementNamed(context, RouteGenerator.inputPage);
     });
     super.initState();
   }

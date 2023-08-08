@@ -5,6 +5,12 @@ import 'package:my_bmi_calculator/component/resusable_card.dart';
 import 'package:my_bmi_calculator/component/rounded_icon_buttton.dart';
 import 'package:my_bmi_calculator/constants/app_styles.dart';
 import 'package:my_bmi_calculator/model/gender.dart';
+import 'package:my_bmi_calculator/model/result.dart';
+import 'package:my_bmi_calculator/routes/routes.dart';
+import 'package:my_bmi_calculator/services/calculator.dart';
+import 'package:my_bmi_calculator/utils/widget_utils.dart';
+
+import 'results_page.dart';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -41,7 +47,9 @@ class _InputScreenState extends State<InputScreen> with SingleTickerProviderStat
         title: const Text("Title"),
         elevation: 0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, RouteGenerator.historyPage);
+          },
           icon: const Icon(Icons.history),
         ),
         actions: [
@@ -242,7 +250,27 @@ class _InputScreenState extends State<InputScreen> with SingleTickerProviderStat
           ),
           BottomButton(
             buttonTitle: "CALCULATE",
-            onTap: () {},
+            onTap: () async {
+              if (selectedGender == Gender.other) {
+                showSnackBar(context, "Please select your gender!!!");
+              } else {
+                Calculator calc = Calculator(
+                  height: height,
+                  weight: weight,
+                );
+
+                Navigator.pushNamed(
+                  context,
+                  RouteGenerator.resultPage,
+                  arguments: BMIResult(
+                    resultBMIScore: await calc.calculateBMI(),
+                    resultText: await calc.getResult(),
+                    resultInterpretation: await calc.getInterpretation(),
+                    resultColor: await calc.getStatusColor(),
+                  ),
+                );
+              }
+            },
           )
         ],
       ),

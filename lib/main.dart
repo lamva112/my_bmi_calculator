@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_bmi_calculator/constants/app_colors.dart';
+import 'package:my_bmi_calculator/routes/routes.dart';
 import 'package:my_bmi_calculator/screen/splash_screen.dart';
 
 void main() {
@@ -21,6 +22,8 @@ class BMICalculator extends StatelessWidget {
         ),
         scaffoldBackgroundColor: AppColors.appPrimaryColor,
       ),
+      initialRoute: RouteGenerator.splash,
+      onGenerateRoute: RouteGenerator.generateRoute,
       home: SplashScreen(),
     );
   }
